@@ -8,7 +8,8 @@ declare namespace Realm {
 
   type QueryableArray<T> = Queryable<T> & {
     count: () => number;
-    any: () => QueryableArray<T>;
+    any: (fn: (x: Queryable<T>) => any) => QueryableArray<T>;
+    all: (fn: (x: Queryable<T>) => any) => QueryableArray<T>;
   };
 
   type Queryable<T> = {
@@ -20,9 +21,6 @@ declare namespace Realm {
   };
 
   interface Collection<T> extends ReadonlyArray<T> {
-    filtered: (
-      fn: (x: Queryable<T>) => boolean,
-      deps?: () => any[],
-    ) => Results<T>;
+    filtered: (fn: (x: Queryable<T>) => any, deps?: () => any) => Results<T>;
   }
 }
