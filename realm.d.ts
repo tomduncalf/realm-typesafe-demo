@@ -8,6 +8,7 @@ declare namespace Realm {
 
   type QueryableArray<T> = Queryable<T> & {
     count: () => number;
+    avg: (fn: (x: Queryable<T>) => any) => number;
     any: (fn: (x: Queryable<T>) => any) => QueryableArray<T>;
     all: (fn: (x: Queryable<T>) => any) => QueryableArray<T>;
   };
