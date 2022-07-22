@@ -94,42 +94,84 @@ if (!realm.objects('Task').length) {
 const App = () => {
   const tasks = realm.objects<Task>('Task');
 
+  // ---------------
+  // Unary operators
+  // ---------------
   // Simple queries with unary operators
   console.log(tasks.filtered(t => t.completed));
+  // console.log(tasks.filtered("completed == true"));
+
   console.log(tasks.filtered(t => !t.completed));
+  // console.log(tasks.filtered("completed == false"));
 
-  // Simple queries with binary operators
+  // ----------------
+  // Binary operators
+  // ----------------
   console.log(tasks.filtered(t => t.age === 20));
-  console.log(tasks.filtered(t => t.age !== 20));
-  console.log(tasks.filtered(t => t.age > 20));
-  console.log(tasks.filtered(t => t.age < 20));
+  // console.log(tasks.filtered("age == 20"));
 
-  // Queries using variables
+  console.log(tasks.filtered(t => t.age !== 20));
+  // console.log(tasks.filtered("age != 20"));
+
+  console.log(tasks.filtered(t => t.age > 20));
+  // console.log(tasks.filtered("age > 20"));
+
+  console.log(tasks.filtered(t => t.age < 20));
+  // console.log(tasks.filtered("age < 20"));
+
+  // ---------------
+  // Using variables
+  // ---------------
   const requestedAge = 30;
   console.log(tasks.filtered(t => t.age < requestedAge));
+  // console.log(tasks.filtered("age < $0", requestedAge));
 
-  // String queries
+  // ----------------
+  // String operators
+  // ----------------
   console.log(tasks.filtered(t => t.name.startsWith('a')));
-  console.log(tasks.filtered(t => t.name.contains('a')));
-  // console.log(tasks.filtered(t => t.name.endsWith('a')));
-  console.log(tasks.filtered(t => t.name.like('*a*')));
-  // Case insensitive
-  console.log(tasks.filtered(t => t.name.startsWith('a', true)));
+  // console.log(tasks.filtered("name BEGINSWITH \"a\""));
 
-  // Using logical operators
+  console.log(tasks.filtered(t => t.name.contains('a')));
+  // console.log(tasks.filtered("name CONTAINS \"a\""));
+
+  console.log(tasks.filtered(t => t.name.endsWith('a')));
+  // console.log(tasks.filtered("name ENDSWITH \"a\""));
+
+  console.log(tasks.filtered(t => t.name.like('*a*')));
+  // console.log(tasks.filtered("name LIKE \"*a*\""));
+
+  console.log(tasks.filtered(t => t.name.startsWith('a', true)));
+  // console.log(tasks.filtered("name BEGINSWITH[c] \"a\""));
+
+  // -----------------
+  // Logical operators
+  // -----------------
   console.log(tasks.filtered(t => t.age > 20 && t.name.startsWith('a')));
+  // console.log(tasks.filtered("(age > 20 && name BEGINSWITH \"a\")"));
+
   console.log(
     tasks.filtered(t => (t.age > 20 && t.name.startsWith('a')) || t.age < 80),
   );
+  // console.log(tasks.filtered("((age > 20 && name BEGINSWITH \"a\") || age < 80)"));
 
+  // --------------------
   // Collection operators
+  // --------------------
   console.log(
     tasks.filtered(t => t.relatedTasks.any(r => r.name.startsWith('b'))),
   );
-  console.log(tasks.filtered(t => t.relatedTasks.all(r => r.age > 30)));
-  console.log(tasks.filtered(t => t.checklistItems.all(c => c.completed)));
+  // console.log(tasks.filtered("ANY relatedTasks.name BEGINSWITH \"b\""));
 
+  console.log(tasks.filtered(t => t.relatedTasks.all(r => r.age > 30)));
+  // console.log(tasks.filtered("ALL relatedTasks.age > 30"));
+
+  console.log(tasks.filtered(t => t.checklistItems.all(c => c.completed)));
+  // console.log(tasks.filtered("ALL checklistItems.completed == true"));
+
+  // --------------------------------------------------------
   // Numerical operators on collections - not implemented yet
+  // --------------------------------------------------------
   // console.log(tasks.filtered(t => t.relatedTasks.count() > 1));
   // console.log(tasks.filtered(t => t.relatedTasks.avg(r => r.age) > 10));
 
