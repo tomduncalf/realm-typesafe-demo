@@ -97,7 +97,6 @@ const App = () => {
   // ---------------
   // Unary operators
   // ---------------
-  // Simple queries with unary operators
   console.log(tasks.filtered(t => t.completed));
   // console.log(tasks.filtered("completed == true"));
 
