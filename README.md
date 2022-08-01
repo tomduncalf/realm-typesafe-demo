@@ -1,4 +1,4 @@
-# Realm JS Typesafe Demo
+# Realm JS Typesafe Demo
 
 Demo of a proof of concept Babel plugin for "typesafe" queries with Realm JS (https://github.com/tomduncalf/babel-realm-typesafe-plugin)
 
